@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Dashboard</title>
+    <!-- Tambahkan Bootstrap CSS melalui CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Dashboardddd</h1>
+    <p>Welcome, <span id="user-name" class="font-weight-bold" th:text="${user.name}">User Name</span>!</p>
+    <p>Your NIM: <span id="user-nim" th:text="${user.nim}">User NIM</span></p>
+
+    <h2 class="my-4">Available Quizzes</h2>
+    <ul id="quiz-list" class="list-group">
+        <li th:each="quiz : ${quizzes}">
+            <a href="#" class="btn btn-link" th:data-id="${quiz.id}" th:data-title="${quiz.title}" onclick="confirmStartQuiz(event)">
+                <span th:text="${quiz.title}">Quiz Title</span>
+            </a>
+        </li>
+    </ul>
+
+    <form id="logout-form" action="/user/logout" method="get">
+        <button type="submit" class="btn btn-danger mt-4">Logout</button>
+    </form>
+</div>
+
+<!-- Tambahkan Bootstrap JS dan dependensi jQuery & Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Fungsi untuk konfirmasi sebelum memulai quiz
+        function confirmStartQuiz(event) {
+            event.preventDefault();  // Mencegah link untuk melakukan navigasi otomatis
+
+            const quizTitle = event.currentTarget.querySelector('span').textContent;  // Mengambil judul quiz
+            const quizId = event.currentTarget.getAttribute('data-id');  // Mengambil data-id dari elemen <a>
+
+            if (quizId === null || quizId === '') {
+                console.log('Quiz ID not found.');
+                return;
+            }
+
+            // Menampilkan dialog konfirmasi
+            const isConfirmed = confirm('Are you sure you want to start the "' + quizTitle + '" quiz?');
+
+            if (isConfirmed) {
+                // Jika pengguna mengkonfirmasi, arahkan ke halaman quiz
+                window.location.href = '/quiz/' + quizId + '/attempt';
+            }
+        }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz - Start</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .question-container {
+            display: none;
+        }
+        .question-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="my-4">Quiz: <span th:text="${quiz.title}"></span></h1>
+
+    <!-- Timer -->
+    <div id="timer" class="text-info">00:00</div>
+
+    <form id="quiz-form" th:action="@{/quiz/{id}/submit(id=${quiz.id})}" method="post">
+        <div th:each="question, iterStat : ${quiz.questions}" class="question-container" th:classappend="${iterStat.index == 0} ? ' active' : ''">
+            <div class="form-group">
+                <label th:text="${question.questionText}"></label>
+                <div>
+                    <label>
+                        <input type="radio" th:name="'answers[' + ${iterStat.index} + ']'"
+                               th:value="true" /> True
+                    </label>
+                    <label>
+                        <input type="radio" th:name="'answers[' + ${iterStat.index} + ']'"
+                               th:value="false" /> False
+                    </label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary next-button">Next</button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-4" id="submit-button" style="display:none;">Submit Quiz</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS & Timer Script -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    let timeLeft = 300; // 5 minutes in seconds
+    const timer = document.getElementById('timer');
+    const submitButton = document.getElementById('submit-button');
+    const quizForm = document.getElementById('quiz-form');
+    const questionContainers = document.querySelectorAll('.question-container');
+    let currentQuestionIndex = 0;
+
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        if (timeLeft > 0) {
+            timeLeft--;
+        } else {
+            clearInterval(timerInterval);
+            alert('Time is up! Your quiz has been submitted automatically.');
+            quizForm.submit();
+        }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Show the next question when clicking "Next"
+    document.querySelectorAll('.next-button').forEach((button, index) => {
+        button.addEventListener('click', function () {
+            // Hide the current question
+            questionContainers[currentQuestionIndex].classList.remove('active');
+
+            // Show the next question
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questionContainers.length) {
+                questionContainers[currentQuestionIndex].classList.add('active');
+            } else {
+                // Show submit button when all questions are answered
+                submitButton.style.display = 'inline-block';
+            }
+        });
+    });
+
+    // Optional: trigger submit when clicking the submit button
+    submitButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        quizForm.submit();
+    });
+</script>
+</body>
+</html>
