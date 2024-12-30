@@ -7,12 +7,17 @@
 </head>
 <body>
 <div class="container">
+<<<<<<< HEAD
     <h1 class="my-4">Dashboardss</h1>
+=======
+    <h1 class="my-4">Dashboardddd</h1>
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
     <p>Welcome, <span id="user-name" class="font-weight-bold" th:text="${user.name}">User Name</span>!</p>
     <p>Your NIM: <span id="user-nim" th:text="${user.nim}">User NIM</span></p>
 
     <h2 class="my-4">Available Quizzes</h2>
     <ul id="quiz-list" class="list-group">
+<<<<<<< HEAD
         <li th:each="quiz : ${quizzes}" class="list-group-item d-flex justify-content-between align-items-center">
             <a href="#" class="btn btn-link" th:data-id="${quiz.id}" th:data-title="${quiz.title}" onclick="confirmStartQuiz(event)">
                 <span th:text="${quiz.title}">Quiz Title</span>
@@ -20,6 +25,13 @@
             <a th:href="'/quiz/' + ${quiz.id} + '/leaderboard'" class="btn btn-info btn-sm ml-2">Leaderboard</a>
         </li>
 
+=======
+        <li th:each="quiz : ${quizzes}">
+            <a href="#" class="btn btn-link" th:data-id="${quiz.id}" th:data-title="${quiz.title}" onclick="confirmStartQuiz(event)">
+                <span th:text="${quiz.title}">Quiz Title</span>
+            </a>
+        </li>
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
     </ul>
 
     <form id="logout-form" action="/user/logout" method="get">

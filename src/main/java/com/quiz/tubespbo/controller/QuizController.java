@@ -1,6 +1,9 @@
 package com.quiz.tubespbo.controller;
 
+<<<<<<< HEAD
 import com.quiz.tubespbo.model.Question;
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
 import com.quiz.tubespbo.model.Quiz;
 import com.quiz.tubespbo.model.QuizResult;
 import com.quiz.tubespbo.model.User;
@@ -12,13 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import com.quiz.tubespbo.model.Question;
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
 import java.util.Collections;
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
 
 @Controller
 @RequestMapping("/quiz")
@@ -33,6 +42,7 @@ public class QuizController {
     @Autowired
     private UserService userService;
 
+<<<<<<< HEAD
     // Menampilkan halaman manage quizzes
     @GetMapping("/manage")
     public String manageQuizzes(Model model) {
@@ -112,12 +122,17 @@ public class QuizController {
         return "redirect:/quiz/" + quizId + "/edit"; // Kembali ke halaman daftar soal
     }
 
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
     // Menampilkan halaman quiz untuk user
     @GetMapping("/{id}/attempt")
     public String attemptQuiz(@PathVariable("id") Long quizId, HttpSession session, Model model) {
         LocalDateTime startTime = LocalDateTime.now();
         session.setAttribute("quizStartTime", startTime);
+<<<<<<< HEAD
 
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         if (quizId == null) {
             throw new IllegalArgumentException("Quiz ID cannot be null");
         }
@@ -127,6 +142,7 @@ public class QuizController {
             return "redirect:/auth/login";
         }
 
+<<<<<<< HEAD
         // Fetch the quiz by ID
         Quiz quiz = quizService.getQuizById(quizId);
 
@@ -144,15 +160,35 @@ public class QuizController {
                              @RequestParam Map<String, String> answers,
                              HttpSession session,
                              Model model) {
+=======
+        Quiz quiz = quizService.getQuizById(quizId);
+        model.addAttribute("quiz", quiz);
+        model.addAttribute("quizId", quizId);
+        return "quiz/quiz";
+    }
+
+    // Memproses jawaban setelah user submit
+    @PostMapping("/{id}/submit")
+    public String submitQuiz(@PathVariable("id") Long quizId,
+                             @RequestParam Map<String, String> answers, // Menggunakan Map untuk menangkap jawaban
+                             HttpSession session,
+                             Model model) {
+        // Mendapatkan data user dari session
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null) {
             return "redirect:/auth/login";
         }
 
+<<<<<<< HEAD
+=======
+        // Mendapatkan quiz berdasarkan ID
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         Quiz quiz = quizService.getQuizById(quizId);
         int score = 0;
         long timeTakenInSeconds = 0;
 
+<<<<<<< HEAD
         List<Boolean> userAnswers = new ArrayList<>();
         for (int i = 0; i < quiz.getQuestions().size(); i++) {
             String answer = answers.get("answers[" + i + "]");
@@ -165,11 +201,27 @@ public class QuizController {
         }
 
         score *= 2;
+=======
+        // Hitung skor berdasarkan jawaban yang benar
+        for (int i = 0; i < quiz.getQuestions().size(); i++) {
+            String answer = answers.get("answers[" + i + "]"); // Mendapatkan jawaban berdasarkan indeks
+            Boolean correctAnswer = quiz.getQuestions().get(i).getCorrectAnswer();
+            if (Boolean.parseBoolean(answer) == correctAnswer) {
+                score += 10;  // Misalnya, setiap jawaban benar diberi 10 poin
+            }
+        }
+
+        // Skor * 2 karena soalnya 5
+        score *= 2;
+
+        // Mendapatkan waktu mulai dan menghitung waktu yang dibutuhkan
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         LocalDateTime startTime = (LocalDateTime) session.getAttribute("quizStartTime");
         if (startTime != null) {
             timeTakenInSeconds = java.time.Duration.between(startTime, LocalDateTime.now()).getSeconds();
         }
 
+<<<<<<< HEAD
         if (timeTakenInSeconds <= 10) {
             score += 90;
         } else if (timeTakenInSeconds <= 30) {
@@ -188,6 +240,28 @@ public class QuizController {
         // Tambahkan quizId dan userId ke model
         model.addAttribute("quizId", quizId);
         model.addAttribute("userId", currentUser.getId());
+=======
+        //bonus score dari timeTaken
+        if(timeTakenInSeconds<=10){
+            score += 90;
+        } else if(timeTakenInSeconds<=30){
+            score += 50;
+        } else if(timeTakenInSeconds<=50){
+            score += 10;
+        }
+
+        // Cek apakah hasil quiz sudah ada berdasarkan userId dan quizId
+        QuizResult existingResult = quizResultService.getQuizResultByUserAndQuiz(quizId, currentUser.getId());
+
+        if (existingResult != null) {
+            // Jika hasil sudah ada, lakukan update
+            quizResultService.updateQuizResult(existingResult, score, startTime, LocalDateTime.now(), timeTakenInSeconds);
+        } else {
+            // Jika tidak ada hasil sebelumnya, simpan sebagai hasil baru
+            quizResultService.saveQuizResult(currentUser, quiz, score, startTime, LocalDateTime.now(), timeTakenInSeconds);
+        }
+
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         model.addAttribute("score", score);
         model.addAttribute("timeTakenInSeconds", timeTakenInSeconds);
 
@@ -195,6 +269,7 @@ public class QuizController {
     }
 
 
+<<<<<<< HEAD
 
     // Menampilkan leaderboard untuk quiz tertentu
     @GetMapping("/{id}/leaderboard")
@@ -287,3 +362,6 @@ public class QuizController {
 
 
 }
+=======
+}
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712

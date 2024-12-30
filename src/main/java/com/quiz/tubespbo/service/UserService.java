@@ -23,6 +23,7 @@ public class UserService {
         }
         return null;
     }
+<<<<<<< HEAD
 
     public boolean existsByNim(String nim) {
         return userRepository.findByNim(nim) != null;
@@ -33,3 +34,6 @@ public class UserService {
     }
 }
 
+=======
+}
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712

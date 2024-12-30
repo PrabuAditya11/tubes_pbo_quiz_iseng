@@ -24,19 +24,29 @@ public class UserController {
     public String userDashboard(HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null) {
+<<<<<<< HEAD
             return "redirect:/auth/login"; // Redirect ke login jika tidak ada session
         }
 
         if ("admin".equals(currentUser.getRole())) {
             return "redirect:/admin/dashboard_admin"; // Redirect ke dashboard admin jika admin
+=======
+            return "redirect:/auth/login"; // Arahkan ke login jika tidak ada session
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
         }
 
         model.addAttribute("user", currentUser);  // Menambahkan user ke model
         model.addAttribute("quizzes", quizService.getAvailableQuizzes()); // Menambahkan quiz ke model
+<<<<<<< HEAD
         return "user/dashboard"; // Redirect ke dashboard user
     }
 
 
+=======
+        return "user/dashboard";  // Pastikan halaman dashboard.html ada
+    }
+
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();  // Menghapus session saat logout

@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
 
 @Data
 @NoArgsConstructor
@@ -34,7 +37,10 @@ public class QuizResult {
     private LocalDateTime endTime;  // Waktu selesai quiz
 
     private long timeTakenInSeconds;  // Waktu yang dibutuhkan (dalam detik)
+<<<<<<< HEAD
 
     @Transient
     private List<Boolean> answers;  // Jawaban user yang tidak disimpan langsung di database
+=======
+>>>>>>> bdd45504ab828288b25d6a96a43ccb3f6ccff712
 }
