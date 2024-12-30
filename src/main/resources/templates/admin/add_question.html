@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Question</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h1 class="my-4">Add Question to Quiz</h1>
+  <form th:action="@{/quiz/{quizId}/save-question(quizId=${quiz.id})}" th:object="${question}" method="post">
+    <div class="form-group">
+      <label for="questionText">Question Text</label>
+      <input type="text" id="questionText" name="questionText" class="form-control" th:field="*{questionText}" required>
+    </div>
+    <div class="form-group">
+      <label for="correctAnswer">Correct Answer</label>
+      <select id="correctAnswer" name="correctAnswer" class="form-control" th:field="*{correctAnswer}">
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>
+</body>
+</html>

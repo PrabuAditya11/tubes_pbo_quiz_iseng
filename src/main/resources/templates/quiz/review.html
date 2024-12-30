@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Quiz Review</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-4">
+  <h1>Review for Quiz: <span th:text="${quiz.title}">Quiz Title</span></h1>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Question</th>
+      <th>Your Answer</th>
+      <th>Correct Answer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question, iterStat : ${questions}">
+      <td th:text="${iterStat.index + 1}">1</td>
+      <td th:text="${question.questionText}">Question Text</td>
+      <td>
+        <span th:if="${quizResult.answers != null and quizResult.answers[iterStat.index]} == true">True</span>
+        <span th:if="${quizResult.answers != null and quizResult.answers[iterStat.index]} == false">False</span>
+      </td>
+      <td>
+        <span th:if="${question.correctAnswer} == true">True</span>
+        <span th:if="${question.correctAnswer} == false">False</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a href="/user/dashboard" class="btn btn-primary">Back to Dashboard</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

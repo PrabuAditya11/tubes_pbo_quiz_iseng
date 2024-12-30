@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create Quiz</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h1 class="my-4">Create Quiz</h1>
+  <form th:action="@{/quiz/save}" th:object="${quiz}" method="post">
+    <div class="form-group">
+      <label for="title">Quiz Title</label>
+      <input type="text" id="title" name="title" class="form-control" th:field="*{title}" required>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>
+</body>
+</html>

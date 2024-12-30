@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to Quiz Application</title>
+    <!-- Bootstrap CSS melalui CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container text-center mt-5">
+    <h1 class="display-4">Welcome to Quiz Application</h1>
+    <p class="lead">Test your knowledge by taking fun and exciting quizzes!</p>
+    <div class="mt-4">
+        <!-- Tombol Login -->
+        <a th:href="@{/auth/login}" class="btn btn-primary btn-lg mx-2">Login</a>
+        <!-- Tombol Register -->
+        <a th:href="@{/auth/register}" class="btn btn-secondary btn-lg mx-2">Register</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

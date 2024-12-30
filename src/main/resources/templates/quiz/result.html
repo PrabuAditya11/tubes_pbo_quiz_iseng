@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Quiz Result</h1>
+    <p>Your score is: <span th:text="${score}">Score</span></p>
+
+    <!-- Link untuk kembali ke dashboard -->
+    <a href="/user/dashboard" class="btn btn-primary">Back to Dashboard</a>
+
+    <!-- Link untuk mengakses halaman review -->
+    <a th:href="'/quiz/' + ${quizId} + '/review/' + ${userId}" class="btn btn-info mt-4">Review Quiz</a>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

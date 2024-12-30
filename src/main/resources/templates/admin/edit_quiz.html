@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Edit Quiz</h1>
+
+    <!-- Form untuk update title -->
+    <form th:action="@{/quiz/{quizId}/update-title(quizId=${quiz.id})}" method="post">
+        <div class="form-group">
+            <label for="title">Quiz Title</label>
+            <input type="text" id="title" name="title" class="form-control" th:value="${quiz.title}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Update Title</button>
+    </form>
+
+    <h2 class="my-4">Questions</h2>
+
+    <!-- Tabel daftar soal -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Question Text</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="question : ${questions}">
+            <td th:text="${question.id}"></td>
+            <td th:text="${question.questionText}"></td>
+            <td>
+                <a th:href="@{/quiz/{quizId}/edit-question/{questionId}(quizId=${quiz.id}, questionId=${question.id})}" class="btn btn-primary">Edit</a>
+                <form th:action="@{/quiz/{quizId}/question/{questionId}/delete(quizId=${quiz.id}, questionId=${question.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <a href="/quiz/manage" class="btn btn-secondary mt-3">Back to Manage Quizzes</a>
+
+
+</div>
+</body>
+</html>

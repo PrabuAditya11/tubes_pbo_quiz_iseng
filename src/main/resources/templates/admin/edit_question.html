@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Question</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Edit Question</h1>
+    <form th:action="@{/quiz/{quizId}/update-question/{questionId}(quizId=${quiz.id}, questionId=${question.id})}" method="post">
+        <div class="form-group">
+            <label for="questionText">Question Text</label>
+            <input type="text" id="questionText" name="questionText" class="form-control" th:value="${question.questionText}" required>
+        </div>
+        <div class="form-group">
+            <label for="correctAnswer">Correct Answer</label>
+            <select id="correctAnswer" name="correctAnswer" class="form-control">
+                <option value="true" th:selected="${question.correctAnswer}">True</option>
+                <option value="false" th:selected="${!question.correctAnswer}">False</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a th:href="@{/quiz/{quizId}/edit(quizId=${quiz.id})}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
